@@ -26,15 +26,15 @@ exports.register = (req, res) => {
 };
 
 exports.login = (req, res) => {
-  const { email, password } = req.body;
+  const { tl_email, tl_password } = req.body;
 
-  User.findByEmail(email, (err, results) => {
+  User.findByEmail(tl_email, (err, results) => {
     if (results.length === 0) {
       return res.status(401).json({ message: 'Sai email hoặc mật khẩu' });
     }
 
     const user = results[0];
-    const isMatch = bcrypt.compareSync(password, user.password);
+    const isMatch = bcrypt.compareSync(tl_password, user.tl_password);
 
     if (!isMatch) {
       return res.status(401).json({ message: 'Sai email hoặc mật khẩu' });

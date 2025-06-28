@@ -1,128 +1,50 @@
 <!DOCTYPE html>
 <html lang="vi">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Trang chủ - Quản lý Thuốc</title>
-  <!-- Bootstrap CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
-  <style>
-    /* Màu chủ đạo dịu nhẹ */
-    :root {
-      --main-color: #6ca0dc; /* xanh nhạt */
-      --main-color-dark: #5882b5;
-      --text-color-light: #f8f9fa;
-      --bg-light-custom: #f0f4ff;
-    }
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hiệu thuốc TL</title>
+    <link
+  href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+  rel="stylesheet"
+/>
+    <!-- index.html -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+  />
 
-    body {
-      background-color: var(--bg-light-custom);
-      color: #333;
-    }
-
-    /* Navbar đổi màu */
-    nav.navbar {
-      background-color: var(--main-color);
-    }
-
-    nav.navbar .nav-link,
-    nav.navbar .navbar-brand {
-      color: var(--text-color-light);
-      font-weight: 600;
-    }
-
-    nav.navbar .nav-link:hover {
-      color: var(--main-color-dark);
-      background-color: var(--text-color-light);
-      border-radius: 5px;
-    }
-
-    /* Hero section */
-    section.bg-light {
-      background-color: #e6ecff !important; /* màu xanh pastel nhạt */
-    }
-
-    section.bg-light h1,
-    section.bg-light p {
-      color: var(--main-color-dark);
-    }
-
-    section.bg-light .btn-primary {
-      background-color: var(--main-color);
-      border-color: var(--main-color);
-    }
-
-    section.bg-light .btn-primary:hover {
-      background-color: var(--main-color-dark);
-      border-color: var(--main-color-dark);
-    }
-
-    /* Tiêu đề danh sách thuốc */
-    h2.text-primary {
-      color: var(--main-color-dark) !important;
-    }
-
-    /* Footer */
-    footer {
-      background-color: var(--main-color);
-      color: var(--text-color-light);
-      font-weight: 500;
-    }
-  </style>
-</head>
-<body>
-
-  <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg">
-    <div class="container">
-      <a class="navbar-brand fw-bold" href="#">Quản lý Thuốc</a>
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-bs-toggle="collapse"
-        data-bs-target="#navbarNav"
-        aria-controls="navbarNav"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <span class="navbar-toggler-icon" style="filter: invert(1);"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ms-auto">
-          <li class="nav-item"><a class="nav-link active" href="#">Trang chủ</a></li>
-          <li class="nav-item"><a class="nav-link" href="#">Danh sách thuốc</a></li>
-          <li class="nav-item"><a class="nav-link" href="#">Giỏ hàng</a></li>
-          <li class="nav-item"><a class="nav-link" href="#">Đăng nhập</a></li>
-          <li class="nav-item"><a class="nav-link" href="#">Đăng ký</a></li>
-        </ul>
-      </div>
-    </div>
-  </nav>
-
-  <!-- Hero section -->
-  <section class="bg-light py-5 text-center">
-    <div class="container">
-      <h1 class="display-4 mb-3">Chào mừng đến với Quản lý Thuốc</h1>
-      <p class="lead text-secondary">Trang chủ quản lý thuốc và đặt hàng trực tuyến</p>
-      <a href="#" class="btn btn-primary btn-lg">Xem danh sách thuốc</a>
-    </div>
-  </section>
-
-  <!-- Danh sách thuốc -->
-  <section class="container my-5">
-    <h2 class="mb-4 text-primary">Danh sách thuốc</h2>
-    <div id="product-list" class="row g-4">
-      <!-- Thuốc sẽ được hiển thị ở đây -->
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer class="text-center py-3">
-    tl_2025 Quản lý Thuốc
-  </footer>
-
-  <!-- Bootstrap JS Bundle (Popper + Bootstrap JS) -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="app.js"></script>
-</body>
+    <link rel="stylesheet" href="/src/styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/17.0.2/umd/react.production.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/17.0.2/umd/react-dom.production.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react-router-dom/5.2.0/react-router-dom.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/redux/4.0.5/redux.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react-redux/7.2.6/react-redux.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/redux-thunk/2.3.0/redux-thunk.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios-cache-interceptor/1.0.0/axios-cache-interceptor.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react-bootstrap/1.6.1/react-bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react-toastify/7.0.4/react-toastify.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react-select/4.3.1/react-select.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react-datepicker/3.4.1/react-datepicker.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react-icons/4.2.0/react-icons.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react-router-dom/5.2.0/react-router-dom.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react-redux/7.2.6/react-redux.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/redux-thunk/2.3.0/redux-thunk.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react-bootstrap-table2/4.0.3/react-bootstrap-table2.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react-bootstrap-table2-paginator/3.0.1/react-bootstrap-table2-paginator.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react-bootstrap-table2-filter/2.0.1/react-bootstrap-table2-filter.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react-bootstrap-table2-editor/1.0.1/react-bootstrap-table2-editor.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react-bootstrap-table2-toolkit/2.0.1/react-bootstrap-table2-toolkit.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react-bootstrap-table2-resizable/1.0.1/react-bootstrap-table2-resizable.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react-bootstrap-table2-sortable/1.0.1/react-bootstrap-table2-sortable.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react-bootstrap-table2-virtualized/1.0.1/react-bootstrap-table2-virtualized.min.js"></script>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
 </html>

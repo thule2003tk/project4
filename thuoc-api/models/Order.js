@@ -1,14 +1,17 @@
-// models/Order.js
-const db = require('../config/db'); // nếu bạn dùng kết nối db này
+// routes/orders.js
+const express = require('express');
+const router = express.Router();
+const orderController = require('../controllers/orderController');
 
-const Order = {
-  create: (orderData, callback) => {
-    // Viết query INSERT vào bảng tl_hoadon
-  },
-  findByUser: (userId, callback) => {
-    // Viết query SELECT * FROM tl_hoadon WHERE userId = ?
-  },
-  // thêm các phương thức khác nếu cần
-};
+// GET tất cả đơn hàng
+router.get('/', orderController.getAllOrders);
 
-module.exports = Order;
+// GET đơn hàng theo mã
+router.get('/:id', orderController.getOrderById);
+
+// DELETE đơn hàng
+router.delete('/:id', orderController.deleteOrder);
+
+// (Tuỳ chọn) Thêm PUT/PATCH nếu muốn cập nhật trạng thái
+
+module.exports = router;

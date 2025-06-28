@@ -1,65 +1,85 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import axios from "axios";
+import { useParams, useNavigate } from "react-router-dom";
+import { useCart } from '../components/CartContext';
 
-function ProductDetail() {
+const ProductDetail = () => {
   const { id } = useParams();
-  const [product, setProduct] = useState(null);
   const navigate = useNavigate();
+  const [product, setProduct] = useState(null);
+  const { addToCart } = useCart();
 
   useEffect(() => {
-    axios.get(`http://localhost:3000/api/products/${id}`)
-      .then(res => setProduct(res.data))
-      .catch(err => console.error(err));
+    const fetchProduct = async () => {
+      try {
+        const response = await axios.get(`http://localhost:3000/api/products/${id}`);
+        setProduct(response.data);
+      } catch (error) {
+        console.error("Lỗi khi lấy chi tiết thuốc:", error);
+      }
+    };
+
+    fetchProduct();
   }, [id]);
 
-  if (!product) return <div>Đang tải...</div>;
+  const handleAddToCart = () => {
+    if (product) {
+      addToCart(product);
+      navigate("/cart");
+    }
+  };
+
+  if (!product) {
+    return <p className="text-center mt-5">Đang tải thông tin thuốc...</p>;
+  }
 
   return (
-    <div className="container mt-4">
-      <h1>{product.name}</h1>
-      <p>{product.description}</p>
-      <p>Giá: {product.price} VND</p>
-
-      <button
-        className="btn btn-success me-2"
-        onClick={() => {
-          // Thêm vào giỏ hàng
-          let cart = JSON.parse(localStorage.getItem('cart')) || [];
-          cart.push({ ...product, quantity: 1 });
-          localStorage.setItem('cart', JSON.stringify(cart));
-          alert('Đã thêm vào giỏ hàng!');
-        }}
-      >
-        Thêm vào giỏ hàng
-      </button>
-
-      <Link to="/" className="btn btn-secondary">Quay lại</Link>
-
-      <button
-        className="btn btn-warning ms-2"
-        onClick={() => navigate(`/admin/product/edit/${id}`)}
-      >
-        Sửa thuốc
-      </button>
-
-      <button
-        className="btn btn-danger ms-2"
-        onClick={() => {
-          if (window.confirm('Bạn có chắc muốn xóa thuốc này?')) {
-            axios.delete(`http://localhost:3000/api/products/${id}`)
-              .then(() => {
-                alert('Xóa thành công');
-                navigate('/');
-              })
-              .catch(() => alert('Lỗi xóa thuốc'));
-          }
-        }}
-      >
-        Xóa thuốc
-      </button>
+    <div style={{
+      display: 'flex',
+      justifyContent: 'center',
+      padding: '2rem',
+      backgroundColor: '#f8f9fa',
+      minHeight: '100vh'
+    }}>
+      <div style={{
+        maxWidth: '600px',
+        width: '100%',
+        backgroundColor: '#fff',
+        padding: '2rem',
+        borderRadius: '10px',
+        boxShadow: '0 0 15px rgba(0,0,0,0.1)'
+      }}>
+        <h2 className="mb-3 text-center">{product.tl_tenthuc}</h2>
+        <div className="text-center mb-3">
+          <img
+            src={product.tl_hinhanh}
+            alt={product.tl_tenthuc}
+            style={{ width: '250px', borderRadius: '8px' }}
+          />
+        </div>
+        <p><strong>Loại:</strong> {product.tl_loai}</p>
+        <p><strong>Công dụng:</strong> {product.tl_congdung}</p>
+        <p><strong>Giá bán:</strong> {parseInt(product.tl_giaban).toLocaleString()} VNĐ</p>
+        <p><strong>Số lượng tồn:</strong> {product.tl_soluongton}</p>
+        <p><strong>Nhà cung cấp:</strong> {product.tl_mancc}</p>
+        <div className="text-center mt-4">
+          <button
+            onClick={handleAddToCart}
+            style={{
+              padding: '0.5rem 1.5rem',
+              backgroundColor: '#007bff',
+              color: 'white',
+              border: 'none',
+              borderRadius: '4px',
+              cursor: 'pointer'
+            }}
+          >
+            Thêm vào giỏ
+          </button>
+        </div>
+      </div>
     </div>
   );
-}
+};
 
 export default ProductDetail;

@@ -1,29 +1,28 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useCart } from '../components/CartContext';
+import '../App.css';
 
 function Cart() {
-  const [cart, setCart] = useState([]);
+  const { cartItems, removeFromCart, clearCart, updateQuantity } = useCart();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const storedCart = JSON.parse(localStorage.getItem('cart')) || [];
-    setCart(storedCart);
-  }, []);
-
-  const handleRemove = (index) => {
-    const newCart = [...cart];
-    newCart.splice(index, 1);
-    setCart(newCart);
-    localStorage.setItem('cart', JSON.stringify(newCart));
+  const formatCurrency = (value) => {
+    return parseInt(value).toLocaleString() + ' VNĐ';
   };
 
-  const total = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
+  if (cartItems.length === 0) {
+    return (
+      <div className="container mt-4">
+        <h2>Giỏ hàng trống</h2>
+        <Link to="/" className="btn btn-primary mt-2">Tiếp tục mua hàng</Link>
+      </div>
+    );
+  }
 
-  if (cart.length === 0) return (
-    <div className="container mt-4">
-      <h2>Giỏ hàng trống</h2>
-      <Link to="/">Tiếp tục mua hàng</Link>
-    </div>
+  const totalPrice = cartItems.reduce(
+    (total, item) => total + item.quantity * parseInt(item.tl_giaban),
+    0
   );
 
   return (
@@ -32,29 +31,61 @@ function Cart() {
       <table className="table">
         <thead>
           <tr>
+            <th>Hình ảnh</th>
             <th>Tên thuốc</th>
             <th>Số lượng</th>
             <th>Giá</th>
+            <th>Thành tiền</th>
             <th>Thao tác</th>
           </tr>
         </thead>
         <tbody>
-          {cart.map((item, idx) => (
+          {cartItems.map((item, idx) => (
             <tr key={idx}>
-              <td>{item.name}</td>
-              <td>{item.quantity}</td>
-              <td>{item.price * item.quantity} VND</td>
               <td>
-                <button className="btn btn-danger btn-sm" onClick={() => handleRemove(idx)}>Xóa</button>
+                <img src={item.tl_hinhanh} alt={item.tl_tenthuc} style={{ width: '80px' }} />
+              </td>
+              <td>{item.tl_tenthuc}</td>
+              <td>
+                <input
+                  type="number"
+                  min="1"
+                  value={item.quantity}
+                  onChange={(e) => updateQuantity(item.tl_mathuoc, e.target.value)}
+                  style={{ width: '60px' }}
+                />
+              </td>
+              <td>{formatCurrency(item.tl_giaban)}</td>
+              <td>{formatCurrency(item.quantity * item.tl_giaban)}</td>
+              <td>
+                <button
+                  className="btn btn-danger btn-sm"
+                  onClick={() => removeFromCart(item.tl_mathuoc)}
+                >
+                  Xoá
+                </button>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
-      <h4>Tổng: {total} VND</h4>
-      <button className="btn btn-success" onClick={() => navigate('/checkout')}>Đặt thuốc</button>
+
+      <h4 className="mt-3">Tổng cộng: {formatCurrency(totalPrice)}</h4>
+
+      <div className="mt-4 d-flex flex-wrap gap-2">
+        <button className="btn btn-success" onClick={() => navigate('/checkout')}>
+          Đặt thuốc
+        </button>
+        <button className="btn btn-secondary" onClick={clearCart}>
+          Xoá toàn bộ
+        </button>
+        <Link to="/" className="btn btn-outline-primary">
+          Về trang chủ
+        </Link>
+      </div>
     </div>
   );
 }
 
 export default Cart;
+// This code is a React component for displaying and managing a shopping cart in a pharmacy management system.

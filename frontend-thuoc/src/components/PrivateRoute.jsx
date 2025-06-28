@@ -1,15 +1,12 @@
-import React, { useContext } from 'react';
-import { Navigate } from 'react-router-dom';
-import { AuthContext } from './AuthContext';
+import React from "react";
+import { Navigate } from "react-router-dom";
+import { useAuth } from "./AuthContext";
 
-export default function PrivateRoute({ children }) {
-  const { user } = useContext(AuthContext);
+const PrivateRoute = ({ children }) => {
+  const { user } = useAuth();
 
-  if (!user) {
-    alert('Bạn cần đăng nhập để thực hiện thao tác này!');
-    return <Navigate to="/login" />;
-  }
+  return user ? children : <Navigate to="/login" />;
+};
 
-  return children;
-}
-//Route bảo vệ trang giỏ hàng
+export default PrivateRoute;
+// This component checks if the user is authenticated.

@@ -23,8 +23,8 @@ const Product = {
     const { tenthuoc, gia, mota, nhom } = data;
     return new Promise((resolve, reject) => {
       db.query(
-        'INSERT INTO tl_thuoc (tenthuoc, gia, mota, nhom) VALUES (?, ?, ?, ?)',
-        [tenthuoc, gia, mota, nhom],
+        'INSERT INTO tl_thuoc (tl_tenthuc, tl_gia, tl_mota, tl_nhom) VALUES (?, ?, ?, ?)',
+        [tl_tenthuc, tl_gia, tl_mota, tl_nhom],
         (err, result) => {
           if (err) return reject(err);
           resolve({ id: result.insertId, ...data });
@@ -34,11 +34,11 @@ const Product = {
   },
 
   update: (id, data) => {
-    const { tenthuoc, gia, mota, nhom } = data;
+    const { tl_tenthuc, tl_gia, tl_mota, tl_nhom } = data;
     return new Promise((resolve, reject) => {
       db.query(
-        'UPDATE tl_thuoc SET tenthuoc = ?, gia = ?, mota = ?, nhom = ? WHERE id = ?',
-        [tenthuoc, gia, mota, nhom, id],
+        'UPDATE tl_thuoc SET tl_tenthuc = ?, tl_gia = ?, tl_mota = ?, tl_nhom = ? WHERE tl_mathuoc = ?',
+        [tl_tenthuc, tl_gia, tl_mota, tl_nhom, id],
         (err) => {
           if (err) return reject(err);
           resolve({ id, ...data });

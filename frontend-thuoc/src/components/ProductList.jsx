@@ -1,53 +1,14 @@
 import React, { useEffect, useState } from "react";
+import { Link } from 'react-router-dom';
+import axios from "axios";
+// Gọi API thật từ backend để lấy danh sách thuốc
 
-// Mock API function - thay thế bằng API thật của bạn
-const fetchThuocList = () => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve([
-        {
-          tl_mathuoc: "TH001",
-          tl_tenthuoc: "Paracetamol 500mg",
-          tl_giaban: 15000,
-          tl_donvi: "Viên",
-          tl_soluong: 100,
-          tl_ngayhethan: "2025-12-31",
-          tl_nhacungcap: "Công ty ABC",
-          tl_mota: "Thuốc giảm đau, hạ sốt"
-        },
-        {
-          tl_mathuoc: "TH002",
-          tl_tenthuoc: "Amoxicillin 250mg",
-          tl_giaban: 25000,
-          tl_donvi: "Viên",
-          tl_soluong: 50,
-          tl_ngayhethan: "2025-10-15",
-          tl_nhacungcap: "Công ty XYZ",
-          tl_mota: "Thuốc kháng sinh"
-        },
-        {
-          tl_mathuoc: "TH003",
-          tl_tenthuoc: "Vitamin C 1000mg",
-          tl_giaban: 80000,
-          tl_donvi: "Hộp",
-          tl_soluong: 30,
-          tl_ngayhethan: "2026-03-20",
-          tl_nhacungcap: "Công ty DEF",
-          tl_mota: "Bổ sung vitamin C"
-        },
-        {
-          tl_mathuoc: "TH004",
-          tl_tenthuoc: "Ibuprofen 400mg",
-          tl_giaban: 12000,
-          tl_donvi: "Viên",
-          tl_soluong: 75,
-          tl_ngayhethan: "2025-08-10",
-          tl_nhacungcap: "Công ty ABC",
-          tl_mota: "Thuốc chống viêm, giảm đau"
-        }
-      ]);
-    }, 1000);
-  });
+const fetchThuocList = async () => {
+  const response = await fetch("http://localhost:3000/api/products");
+  if (!response.ok) {
+    throw new Error("Không thể lấy danh sách thuốc từ máy chủ");
+  }
+  return await response.json();
 };
 
 export default function ThuocList() {
@@ -55,25 +16,29 @@ export default function ThuocList() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
-  const [sortBy, setSortBy] = useState("tl_tenthuoc");
+  const [sortBy, setSortBy] = useState("tenthuc");
   const [filterBy, setFilterBy] = useState("all");
   const [viewMode, setViewMode] = useState("table"); // table hoặc card
 
   useEffect(() => {
-    fetchThuocList()
-      .then(data => {
+    const fetchData = async () => {
+      try {
+        const data = await fetchThuocList();
         setThuocs(data);
         setLoading(false);
-      })
-      .catch(err => {
+      } catch (err) {
         setError(err.message);
         setLoading(false);
-      });
+      }
+    };
+
+    fetchData();
   }, []);
 
   const filteredThuocs = thuocs.filter(thuoc => {
-    const matchesSearch = thuoc.tl_tenthuoc.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         thuoc.tl_mathuoc.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesSearch =
+      thuoc.tl_tenthuc.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      thuoc.tl_mathuoc.toLowerCase().includes(searchTerm.toLowerCase());
 
     if (filterBy === "all") return matchesSearch;
     if (filterBy === "lowStock") return matchesSearch && thuoc.tl_soluong < 50;
@@ -108,7 +73,7 @@ export default function ThuocList() {
   const ThuocCard = ({ thuoc }) => (
     <div className="bg-white rounded-lg shadow-md p-6 border hover:shadow-lg transition-shadow">
       <div className="flex justify-between items-start mb-3">
-        <h3 className="text-lg font-semibold text-gray-800">{thuoc.tl_tenthuoc}</h3>
+        <h3 className="text-lg font-semibold text-gray-800">{thuoc.tl_tenthuc}</h3>
         <span className="text-sm text-gray-500">#{thuoc.tl_mathuoc}</span>
       </div>
       <div className="space-y-2 text-sm">
@@ -200,7 +165,7 @@ export default function ThuocList() {
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
             >
-              <option value="tl_tenthuoc">Tên thuốc</option>
+              <option value="tl_tenthuc">Tên thuốc</option>
               <option value="tl_giaban">Giá bán</option>
               <option value="tl_soluong">Số lượng</option>
             </select>
@@ -256,10 +221,14 @@ export default function ThuocList() {
               {sortedThuocs.map((thuoc) => (
                 <tr key={thuoc.tl_mathuoc} className="border-t hover:bg-gray-50">
                   <td className="px-4 py-2 text-sm text-gray-800">{thuoc.tl_mathuoc}</td>
-                  <td className="px-4 py-2 text-sm text-gray-800">{thuoc.tl_tenthuoc}</td>
+                  <td className="px-4 py-2 text-sm text-gray-800">{thuoc.tl_tenthuc}</td>
                   <td className="px-4 py-2 text-sm text-green-600">{formatCurrency(thuoc.tl_giaban)}</td>
-                  <td className={`px-4 py-2 text-sm ${thuoc.tl_soluong < 50 ? 'text-red-600' : 'text-blue-600'}`}>{thuoc.tl_soluong} {thuoc.tl_donvi}</td>
-                  <td className={`px-4 py-2 text-sm ${isExpiringSoon(thuoc.tl_ngayhethan) ? 'text-red-600' : 'text-gray-800'}`}>{new Date(thuoc.tl_ngayhethan).toLocaleDateString('vi-VN')}</td>
+                  <td className={`px-4 py-2 text-sm ${thuoc.tl_soluong < 50 ? 'text-red-600' : 'text-blue-600'}`}>
+                    {thuoc.tl_soluong} {thuoc.tl_donvi}
+                  </td>
+                  <td className={`px-4 py-2 text-sm ${isExpiringSoon(thuoc.tl_ngayhethan) ? 'text-red-600' : 'text-gray-800'}`}>
+                    {new Date(thuoc.tl_ngayhethan).toLocaleDateString('vi-VN')}
+                  </td>
                   <td className="px-4 py-2 text-sm text-gray-800">{thuoc.tl_nhacungcap}</td>
                 </tr>
               ))}
