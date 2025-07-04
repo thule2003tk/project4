@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 15, 2025 at 08:09 PM
+-- Generation Time: Jul 04, 2025 at 11:27 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -20,6 +20,32 @@ SET time_zone = "+00:00";
 --
 -- Database: `tl_thuoc`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `lienhe`
+--
+
+CREATE TABLE `lienhe` (
+  `id` int(11) NOT NULL,
+  `ten` varchar(255) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `noidung` text DEFAULT NULL,
+  `traloi` text DEFAULT NULL,
+  `trangthai` varchar(50) DEFAULT 'Chưa trả lời'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `lienhe`
+--
+
+INSERT INTO `lienhe` (`id`, `ten`, `email`, `noidung`, `traloi`, `trangthai`) VALUES
+(6, NULL, 'tl@gmail.com', NULL, NULL, 'Chưa trả lời'),
+(7, NULL, 'tl@gmail.com', NULL, NULL, 'Chưa trả lời'),
+(8, 'tl', 'tl@gmail.com', 'dètgyhujhgfbdvdcdfdvgbv', NULL, 'Chưa trả lời'),
+(9, 'tl', 'tl@gmail.com', 'azsdfghjkl.,/', NULL, 'Chưa trả lời'),
+(10, 'thu8 ưdqyfgh', 'tl@gmail.com', 'ádfghjikjhgfvfghk', NULL, 'Chưa trả lời');
 
 -- --------------------------------------------------------
 
@@ -165,11 +191,13 @@ CREATE TABLE `tl_khachhang` (
 --
 
 INSERT INTO `tl_khachhang` (`tl_makh`, `tl_tenkh`, `tl_email`, `tl_sdt`, `tl_diachi`, `tl_matkhau`) VALUES
-('KH001', 'Nguyen Van A', 'nva@example.com', '0912345678', '123 Đường A, Quận 1', 'pass123'),
-('KH002', 'Tran Thi B', 'ttb@example.com', '0987654321', '456 Đường B, Quận 2', 'pass123'),
-('KH003', 'Le Van C', 'lvc@example.com', '0911222333', '789 Đường C, Quận 3', 'pass123'),
-('KH004', 'Pham Thi D', 'ptd@example.com', '0909888777', '321 Đường D, Quận 4', 'pass123'),
-('KH005', 'Hoang Van E', 'hve@example.com', '0933444555', '654 Đường E, Quận 5', 'pass123');
+('KH001', 'Nguyen Van A', 'nva@example.com', '0912345678', '123 Đường A, Quận 1', 'areyoucrazy'),
+('KH002', 'Tran Thi B', 'ttb@example.com', '0987654321', '456 Đường B, Quận 2', 'areyouok'),
+('KH003', 'Le Van C', 'lvc@example.com', '0911222333', '789 Đường C, Quận 3', 'helloem'),
+('KH004', 'Pham Thi D', 'ptd@example.com', '0909888777', '321 Đường D, Quận 4', '123pass\r\n'),
+('KH005', 'Hoang Van E', 'hve@example.com', '0933444555', '654 Đường E, Quận 5', 'pass12345'),
+('KH006', 'Lê Thu', 'thu@gmail.com', '0900111222', 'Hà Nội', '123456'),
+('KH007', 'llllllllllllllllllllllllll', 'thu1@gmail.com', '34567i', 'ha nam', '123456');
 
 -- --------------------------------------------------------
 
@@ -272,11 +300,12 @@ CREATE TABLE `tl_thuoc` (
 --
 
 INSERT INTO `tl_thuoc` (`tl_mathuoc`, `tl_tenthuc`, `tl_loai`, `tl_congdung`, `tl_giaban`, `tl_soluongton`, `tl_mancc`, `tl_hinhanh`) VALUES
-('T001', 'Paracetamol', 'Thuốc giảm đau', 'Giảm đau, hạ sốt', 5000.00, 100, 'NCC001', 'paracetamol.jpg'),
-('T002', 'Amoxicillin', 'Thuốc kháng sinh', 'Điều trị nhiễm khuẩn', 12000.00, 50, 'NCC002', 'amoxicillin.jpg'),
-('T003', 'Vitamin C', 'Thực phẩm chức năng', 'Tăng cường miễn dịch', 15000.00, 200, 'NCC003', 'vitaminc.jpg'),
-('T004', 'Omeprazole', 'Thuốc dạ dày', 'Giảm tiết acid dạ dày', 20000.00, 75, 'NCC004', 'omeprazole.jpg'),
-('T005', 'Ibuprofen', 'Thuốc giảm đau', 'Giảm đau, chống viêm', 8000.00, 120, 'NCC005', 'ibuprofen.jpg');
+('T001', 'Paracetamol', 'Thuốc giảm đau', 'Giảm đau, hạ sốt', 5000.00, 100, 'NCC001', 'https://cdn.nhathuoclongchau.com.vn/unsafe/768x0/filters:quality(90)/https://cms-prod.s3-sgn09.fptcloud.com/00005713_panadol_extra_do_500mg_180v_sanofi_3541_63d7_large_72b42bbdda.jpg'),
+('T002', 'Amoxicillin', 'Thuốc kháng sinh', 'Điều trị nhiễm khuẩn', 12000.00, 50, 'NCC002', 'https://m.media-amazon.com/images/I/81jsoO+rWBL._AC_SL1500_.jpg'),
+('T003', 'Vitamin C', 'Thực phẩm chức năng', 'Tăng cường miễn dịch', 15000.00, 200, 'NCC003', 'https://m.media-amazon.com/images/I/71wIJHm3edL.__AC_SX300_SY300_QL70_ML2_.jpg'),
+('T004', 'Omeprazole', 'Thuốc dạ dày', 'Giảm tiết acid dạ dày', 20000.00, 75, 'NCC004', 'https://m.media-amazon.com/images/I/610fIk9FtZL._AC_SX679_.jpg'),
+('T005', 'Ibuprofen', 'Thuốc giảm đau', 'Giảm đau, chống viêm', 8000.00, 120, 'NCC005', 'https://m.media-amazon.com/images/I/61lT-oMqXzL._AC_SL1500_.jpg'),
+('thu', 'thu', 'bm', 'vô dụng', 99999999.99, 11, 'NCC005', 'https://wineandfood.vn/image/catalog/anh-bai-viet/cac-loai-thuc-pham-khac/siro-cay-la-phong/chiec-la-phong.jpg');
 
 -- --------------------------------------------------------
 
@@ -303,13 +332,24 @@ CREATE TABLE `tl_user` (
 --
 
 INSERT INTO `tl_user` (`tl_mauser`, `tl_username`, `tl_email`, `tl_password`, `tl_fullname`, `tl_role`, `tl_phonenumber`, `tl_address`, `tl_created_at`, `tl_updated_at`, `tl_makh`) VALUES
-('U001', 'nguyenvana', 'a@gmail.com', '123456', 'Nguyễn Văn A', 'customer', '0901123456', 'Hà Nội', '2025-05-01 10:00:00', '2025-05-01 10:00:00', 'KH001'),
-('U002', 'tranthib', 'b@gmail.com', '123456', 'Trần Thị B', 'customer', '0902233445', 'Đà Nẵng', '2025-05-02 11:00:00', '2025-05-02 11:00:00', 'KH002'),
-('U003', 'adminuser', 'admin@example.com', 'admin123', 'Admin', 'admin', '0911222333', 'Văn phòng', '2025-05-01 08:00:00', '2025-05-01 08:00:00', NULL);
+('U001', 'nguyenvana', 'a@gmail.com', '$2b$10$SvuNE9/2Vs/Q5vkqpI.iXudMZ3RN9TgLp5KCUAopdGEbm73uM2uDC', 'Nguyễn Văn A', 'customer', '0901123456', 'Hà Nội', '2025-05-01 10:00:00', '2025-05-01 10:00:00', NULL),
+('U002', 'tranthib', 'b@gmail.com', '123456', 'Trần Thị B', 'customer', '0902233445', 'Đà Nẵng', '2025-05-02 11:00:00', '2025-05-02 11:00:00', NULL),
+('U003', 'adminuser', 'admin@example.com', '$2b$10$SPOVEONsWoHQ86Lv9a48HepArxtE78ZjMsFfTmrXbvL4b1196rpNa', 'Admin', 'admin', '0911222333', 'Văn phòng', '2025-05-01 08:00:00', '2025-05-01 08:00:00', NULL),
+('U004', 'thuthuthu', 'tttt@hgamail.com', '$2b$10$ciwt0p1wGqTjkuOGTDMBQud7MASjYVh9.wmnUlJETDFHPyteqEXyK', 'tttt', 'customer', '11111111111', 'mỹ tho', '2025-06-20 01:34:50', '2025-06-20 01:34:50', NULL),
+('U005', 'thu123', 'thu@gmail.com', '$2b$10$fbw0wY2aUsygxtpb/9hdBubqcx1Hfy79iqooaKPB6atSfIklAl4Pi', 'Lê Thu', 'customer', '0900111222', 'Hà Nội', '2025-06-20 01:36:52', '2025-06-20 01:36:52', NULL),
+('U006', 'linhling', 'thu123456@gmail.com', '$2b$10$E5LV6R/Fqz7CYdTNIYRmAONmstcj0KkJ0Z4VZ0LD0p9zjZM6u.Xtm', 'thuthuhtuhtu', 'customer', '67987654321', 'hà nội', '2025-06-20 05:34:12', '2025-06-23 01:29:15', 'KH006'),
+('U007', 'linh', 'linh1@gmail.com', '$2b$10$61V9Nwyzc9YgPe0y402Ytu2bDyzgNRRlTj8N31ziT2btLrr2XmrX.', 'đttlinhn', 'customer', '0900909090', 'ha noi', '2025-06-20 06:53:56', '2025-06-20 06:53:56', NULL),
+('U008', 'tl', 'tl@gmail.com', '$2b$10$kyvOe3sRITLxdB727z4Ate0cL9xvB4RimS2caB9N/otlbMb2I1dDG', 'tltltl', 'customer', '8888888888', 'hn2', '2025-06-23 02:01:40', '2025-06-23 02:01:40', NULL);
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `lienhe`
+--
+ALTER TABLE `lienhe`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `tl_admin`
@@ -389,6 +429,16 @@ ALTER TABLE `tl_user`
   ADD UNIQUE KEY `tl_username` (`tl_username`),
   ADD UNIQUE KEY `tl_email` (`tl_email`),
   ADD KEY `tl_makh` (`tl_makh`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `lienhe`
+--
+ALTER TABLE `lienhe`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- Constraints for dumped tables
