@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 function AdminCustomers() {
   const [customers, setCustomers] = useState([]);
@@ -16,7 +17,7 @@ function AdminCustomers() {
   const fetchCustomers = () => {
     axios.get('http://localhost:3000/api/customers')
       .then(res => setCustomers(res.data))
-      .catch(err => console.error(err));
+      .catch(err => console.error('❌ Lỗi khi lấy danh sách khách hàng:', err));
   };
 
   useEffect(() => {
@@ -38,10 +39,32 @@ function AdminCustomers() {
         await axios.post('http://localhost:3000/api/customers', form);
         alert('✅ Thêm khách hàng thành công!');
       }
+      resetForm();
+      fetchCustomers();
     } catch (error) {
       alert('❌ Lỗi khi lưu khách hàng!');
+      console.error(error);
     }
+  };
 
+  const handleEdit = (customer) => {
+    setEditingCustomer(customer);
+    setForm({ ...customer });
+  };
+
+  const handleDelete = async (id) => {
+    if (window.confirm('Bạn có chắc muốn xoá khách hàng này?')) {
+      try {
+        await axios.delete(`http://localhost:3000/api/customers/${id}`);
+        alert('🗑️ Xoá khách hàng thành công!');
+        fetchCustomers();
+      } catch (error) {
+        alert('❌ Xoá khách hàng thất bại!');
+      }
+    }
+  };
+
+  const resetForm = () => {
     setForm({
       tl_makh: '',
       tl_tenkh: '',
@@ -51,33 +74,15 @@ function AdminCustomers() {
       tl_matkhau: '',
     });
     setEditingCustomer(null);
-    fetchCustomers();
-  };
-
-  const handleEdit = (customer) => {
-    setEditingCustomer(customer);
-    setForm({ ...customer });
-  };
-
-  const handleDelete = async (id) => {
-    if (window.confirm('Bạn có chắc muốn xóa khách hàng này?')) {
-      try {
-        await axios.delete(`http://localhost:3000/api/customers/${id}`);
-        alert('🗑️ Xóa khách hàng thành công!');
-        fetchCustomers();
-      } catch (error) {
-        alert('❌ Xóa khách hàng thất bại!');
-      }
-    }
   };
 
   return (
     <div className="container mt-4">
-      <h2 className="mb-4 text-center">Quản lý khách hàng</h2>
+      <h2 className="text-center mb-4">👥 Quản lý khách hàng</h2>
 
-      {/* 🔵 Form thêm/sửa khách hàng */}
-      <form className="row g-3 mb-5" onSubmit={handleSubmit}>
-        <div className="col-md-2">
+      {/* Form thêm/sửa */}
+      <form className="row row-cols-1 row-cols-md-3 g-3 mb-5 border p-4 bg-light rounded shadow-sm" onSubmit={handleSubmit}>
+        <div className="col">
           <input
             type="text"
             className="form-control"
@@ -89,7 +94,7 @@ function AdminCustomers() {
             disabled={!!editingCustomer}
           />
         </div>
-        <div className="col-md-2">
+        <div className="col">
           <input
             type="text"
             className="form-control"
@@ -100,7 +105,7 @@ function AdminCustomers() {
             required
           />
         </div>
-        <div className="col-md-2">
+        <div className="col">
           <input
             type="email"
             className="form-control"
@@ -111,17 +116,17 @@ function AdminCustomers() {
             required
           />
         </div>
-        <div className="col-md-2">
+        <div className="col">
           <input
             type="text"
             className="form-control"
             name="tl_sdt"
             value={form.tl_sdt}
             onChange={handleChange}
-            placeholder="SĐT"
+            placeholder="Số điện thoại"
           />
         </div>
-        <div className="col-md-2">
+        <div className="col">
           <input
             type="text"
             className="form-control"
@@ -131,7 +136,7 @@ function AdminCustomers() {
             placeholder="Địa chỉ"
           />
         </div>
-        <div className="col-md-2">
+        <div className="col">
           <input
             type="password"
             className="form-control"
@@ -144,31 +149,21 @@ function AdminCustomers() {
         </div>
         <div className="col-12 text-end">
           <button type="submit" className="btn btn-primary">
-            {editingCustomer ? 'Cập nhật' : 'Thêm mới'}
+            {editingCustomer ? '💾 Lưu thay đổi' : '➕ Thêm mới'}
           </button>
           {editingCustomer && (
             <button
               type="button"
               className="btn btn-secondary ms-2"
-              onClick={() => {
-                setEditingCustomer(null);
-                setForm({
-                  tl_makh: '',
-                  tl_tenkh: '',
-                  tl_email: '',
-                  tl_sdt: '',
-                  tl_diachi: '',
-                  tl_matkhau: '',
-                });
-              }}
+              onClick={resetForm}
             >
-              Huỷ
+              ❌ Huỷ
             </button>
           )}
         </div>
       </form>
 
-      {/* 🟨 Bảng khách hàng */}
+      {/* Bảng danh sách khách hàng */}
       <div className="table-responsive">
         <table className="table table-bordered table-hover align-middle">
           <thead className="table-dark text-center">
@@ -193,25 +188,31 @@ function AdminCustomers() {
                 <td>{c.tl_matkhau}</td>
                 <td className="text-center">
                   <button className="btn btn-sm btn-warning me-2" onClick={() => handleEdit(c)}>
-                    Sửa
+                    ✏️ Sửa
                   </button>
                   <button className="btn btn-sm btn-danger" onClick={() => handleDelete(c.tl_makh)}>
-                    Xoá
+                    🗑️ Xoá
                   </button>
                 </td>
               </tr>
             ))}
             {customers.length === 0 && (
               <tr>
-                <td colSpan="7" className="text-center">Không có dữ liệu</td>
+                <td colSpan="7" className="text-center text-muted">Không có dữ liệu</td>
               </tr>
             )}
           </tbody>
         </table>
+      </div>
+
+      {/* Nút quay lại admin */}
+      <div className="text-center mt-4">
+        <Link to="/admin" className="btn btn-outline-secondary">
+          ⬅ Quay lại trang quản trị
+        </Link>
       </div>
     </div>
   );
 }
 
 export default AdminCustomers;
-// This code is a React component for managing customers in an admin dashboard.

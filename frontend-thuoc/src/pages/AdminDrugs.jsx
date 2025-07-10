@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function AdminDrugs() {
   const [drugs, setDrugs] = useState([]);
@@ -90,9 +91,10 @@ function AdminDrugs() {
 
   return (
     <div className="container mt-4">
-      <h2 className="mb-3">{editingId ? 'Sửa thuốc' : 'Thêm thuốc mới'}</h2>
-      <form onSubmit={handleSubmit} className="row g-3 mb-4">
-        <div className="col-md-3">
+      <h2 className="text-center mb-4">{editingId ? '🛠 Sửa thuốc' : '➕ Thêm thuốc mới'}</h2>
+
+      <form onSubmit={handleSubmit} className="row row-cols-1 row-cols-md-2 g-3 mb-5 border rounded p-4 bg-light shadow-sm">
+        <div className="col">
           <input
             className="form-control"
             placeholder="Mã thuốc"
@@ -102,7 +104,7 @@ function AdminDrugs() {
             disabled={!!editingId}
           />
         </div>
-        <div className="col-md-3">
+        <div className="col">
           <input
             className="form-control"
             placeholder="Tên thuốc"
@@ -111,16 +113,16 @@ function AdminDrugs() {
             required
           />
         </div>
-        <div className="col-md-3">
+        <div className="col">
           <input
             className="form-control"
-            placeholder="Loại"
+            placeholder="Loại thuốc"
             value={form.tl_loai}
             onChange={e => setForm({ ...form, tl_loai: e.target.value })}
             required
           />
         </div>
-        <div className="col-md-3">
+        <div className="col">
           <input
             className="form-control"
             placeholder="Công dụng"
@@ -129,7 +131,7 @@ function AdminDrugs() {
             required
           />
         </div>
-        <div className="col-md-2">
+        <div className="col">
           <input
             type="number"
             className="form-control"
@@ -139,7 +141,7 @@ function AdminDrugs() {
             required
           />
         </div>
-        <div className="col-md-2">
+        <div className="col">
           <input
             type="number"
             className="form-control"
@@ -149,7 +151,7 @@ function AdminDrugs() {
             required
           />
         </div>
-        <div className="col-md-3">
+        <div className="col">
           <input
             className="form-control"
             placeholder="Mã nhà cung cấp"
@@ -158,7 +160,7 @@ function AdminDrugs() {
             required
           />
         </div>
-        <div className="col-md-3">
+        <div className="col">
           <input
             className="form-control"
             placeholder="Link ảnh (tuỳ chọn)"
@@ -166,64 +168,66 @@ function AdminDrugs() {
             onChange={e => setForm({ ...form, tl_hinhanh: e.target.value })}
           />
         </div>
-        <div className="col-md-2">
+        <div className="col">
           <button type="submit" className="btn btn-success w-100">
-            {editingId ? 'Lưu sửa' : 'Thêm'}
+            {editingId ? '💾 Lưu thay đổi' : '➕ Thêm thuốc'}
           </button>
         </div>
         {editingId && (
-          <div className="col-md-2">
+          <div className="col">
             <button type="button" onClick={resetForm} className="btn btn-secondary w-100">
-              Huỷ
+              ❌ Huỷ
             </button>
           </div>
         )}
       </form>
 
-      <h3>📋 Danh sách thuốc ({drugs.length})</h3>
-      <table className="table table-bordered">
-        <thead className="table-dark">
-          <tr>
-            <th>Mã</th>
-            <th>Ảnh</th>
-            <th>Tên</th>
-            <th>Loại</th>
-            <th>Công dụng</th>
-            <th>Giá</th>
-            <th>Số lượng</th>
-            <th>Nhà CC</th>
-            <th>Hành động</th>
-          </tr>
-        </thead>
-        <tbody>
-          {drugs.map(drug => (
-            <tr key={drug.tl_mathuoc}>
-              <td>{drug.tl_mathuoc}</td>
-              <td>
-                {drug.tl_hinhanh ? (
-                  <img src={drug.tl_hinhanh} alt={drug.tl_tenthuc} style={{ width: '50px', height: '50px', objectFit: 'cover' }} />
-                ) : (
-                  <span className="text-muted">Không có ảnh</span>
-                )}
-              </td>
-              <td>{drug.tl_tenthuc}</td>
-              <td>{drug.tl_loai}</td>
-              <td>{drug.tl_congdung}</td>
-              <td>{drug.tl_giaban}</td>
-              <td>{drug.tl_soluongton}</td>
-              <td>{drug.tl_mancc}</td>
-              <td>
-                <button onClick={() => handleEdit(drug)} className="btn btn-warning btn-sm me-2">Sửa</button>
-                <button onClick={() => handleDelete(drug.tl_mathuoc)} className="btn btn-danger btn-sm">Xoá</button>
-              </td>
+      <h4 className="mb-3">📋 Danh sách thuốc ({drugs.length})</h4>
+      <div className="table-responsive">
+        <table className="table table-bordered table-striped table-hover align-middle">
+          <thead className="table-dark">
+            <tr>
+              <th>Mã</th>
+              <th>Ảnh</th>
+              <th>Tên</th>
+              <th>Loại</th>
+              <th>Công dụng</th>
+              <th>Giá</th>
+              <th>Số lượng</th>
+              <th>Nhà CC</th>
+              <th>Hành động</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {drugs.map(drug => (
+              <tr key={drug.tl_mathuoc}>
+                <td>{drug.tl_mathuoc}</td>
+                <td>
+                  {drug.tl_hinhanh ? (
+                    <img src={drug.tl_hinhanh} alt={drug.tl_tenthuc} style={{ width: '50px', height: '50px', objectFit: 'cover' }} />
+                  ) : (
+                    <span className="text-muted">Không có ảnh</span>
+                  )}
+                </td>
+                <td>{drug.tl_tenthuc}</td>
+                <td>{drug.tl_loai}</td>
+                <td>{drug.tl_congdung}</td>
+                <td>{drug.tl_giaban.toLocaleString()}₫</td>
+                <td>{drug.tl_soluongton}</td>
+                <td>{drug.tl_mancc}</td>
+                <td>
+                  <button onClick={() => handleEdit(drug)} className="btn btn-warning btn-sm me-2">✏️ Sửa</button>
+                  <button onClick={() => handleDelete(drug.tl_mathuoc)} className="btn btn-danger btn-sm">🗑️ Xoá</button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
 
-      {/* Nút quay lại trang quản trị */}
+      {/* Nút quay lại trang admin */}
       <div className="text-center mt-4">
-        <Link to="./admin" className="btn btn-secondary">
+        <Link to="/admin" className="btn btn-outline-secondary">
           ⬅ Quay lại trang quản trị
         </Link>
       </div>
@@ -232,3 +236,4 @@ function AdminDrugs() {
 }
 
 export default AdminDrugs;
+// This code defines an AdminDrugs component that allows administrators to manage drugs in a pharmacy application.

@@ -33,7 +33,7 @@ function AdminDashboard() {
       .then(res => setCustomers(res.data))
       .catch(err => console.error(err));
 
-    axios.get('http://localhost:3000/api/contacts')
+    axios.get('http://localhost:3000/api/lienhe')
       .then(res => setContacts(res.data))
       .catch(err => console.error(err));
   }, [navigate]);
