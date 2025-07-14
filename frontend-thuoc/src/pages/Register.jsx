@@ -1,7 +1,12 @@
 import React, { useState } from "react";
-import { register } from "../services/authService";
+import { register, loginAPI } from "../services/authService";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../components/AuthContext"; // 👈 để gọi login()
 
 function Register() {
+  const navigate = useNavigate();
+  const { login } = useAuth(); // 👈 dùng để set user vào context
+
   const [form, setForm] = useState({
     username: "",
     email: "",
@@ -18,8 +23,19 @@ function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      // Gửi thông tin đăng ký
       const res = await register(form);
-      alert(res.message);
+      alert(res.message || "Đăng ký thành công");
+
+      // Sau khi đăng ký thành công -> tự đăng nhập
+      const loginRes = await loginAPI({
+        tl_email: form.email,
+        tl_password: form.password,
+      });
+
+      login(loginRes.user); // Cập nhật vào context
+      navigate("/"); // Điều hướng về trang chủ
+
     } catch (err) {
       console.error("Lỗi:", err.response?.data || err);
       alert("Đăng ký thất bại");
@@ -39,7 +55,6 @@ function Register() {
                   type="text"
                   name="username"
                   className="form-control"
-                  placeholder="Tên đăng nhập"
                   value={form.username}
                   onChange={handleChange}
                   required
@@ -52,7 +67,6 @@ function Register() {
                   type="email"
                   name="email"
                   className="form-control"
-                  placeholder="Email"
                   value={form.email}
                   onChange={handleChange}
                   required
@@ -65,7 +79,6 @@ function Register() {
                   type="password"
                   name="password"
                   className="form-control"
-                  placeholder="Mật khẩu"
                   value={form.password}
                   onChange={handleChange}
                   required
@@ -78,7 +91,6 @@ function Register() {
                   type="text"
                   name="fullname"
                   className="form-control"
-                  placeholder="Họ tên"
                   value={form.fullname}
                   onChange={handleChange}
                 />
@@ -90,7 +102,6 @@ function Register() {
                   type="text"
                   name="phonenumber"
                   className="form-control"
-                  placeholder="Số điện thoại"
                   value={form.phonenumber}
                   onChange={handleChange}
                 />
@@ -102,7 +113,6 @@ function Register() {
                   type="text"
                   name="address"
                   className="form-control"
-                  placeholder="Địa chỉ"
                   value={form.address}
                   onChange={handleChange}
                 />
@@ -120,4 +130,3 @@ function Register() {
 }
 
 export default Register;
-// This code defines a Register component that allows users to create a new account.

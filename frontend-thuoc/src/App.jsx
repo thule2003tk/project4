@@ -24,7 +24,7 @@ import LienHe from './pages/LienHe';
 import AdminCustomers from './pages/AdminCustomers';
 import AdminOrders from './pages/AdminOrders';
 import TuvanDetail from './pages/TuvanDetail'; // 👈 thêm trang mới
-
+import ScrollToTop from './components/ScrollToTop'; // 👈 Thêm dòng này
 
 
 import './App.css'; // Import your CSS styles
@@ -32,6 +32,8 @@ import './App.css'; // Import your CSS styles
 function App() {
   return (
     <Router>
+      <ScrollToTop /> {/* 👈 Thêm ScrollToTop để tự động cuộn lên đầu trang khi chuyển route */}
+      
       <AuthProvider> {/* 👈 Bọc toàn bộ app trong AuthProvider */}
         <CartProvider>
           

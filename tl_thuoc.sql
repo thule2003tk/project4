@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 04, 2025 at 11:27 AM
+-- Generation Time: Jul 14, 2025 at 05:15 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -99,31 +99,6 @@ INSERT INTO `tl_cthoadon` (`tl_macthd`, `tl_mahd`, `tl_mathuoc`, `tl_soluong`, `
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tl_ctnhapkho`
---
-
-CREATE TABLE `tl_ctnhapkho` (
-  `tl_mactnk` varchar(10) NOT NULL,
-  `tl_manhap` varchar(10) DEFAULT NULL,
-  `tl_mathuoc` varchar(10) DEFAULT NULL,
-  `tl_soluong` int(11) DEFAULT NULL,
-  `tl_gianhap` decimal(10,2) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `tl_ctnhapkho`
---
-
-INSERT INTO `tl_ctnhapkho` (`tl_mactnk`, `tl_manhap`, `tl_mathuoc`, `tl_soluong`, `tl_gianhap`) VALUES
-('CTNK001', 'NK001', 'T001', 100, 4000.00),
-('CTNK002', 'NK002', 'T002', 50, 10000.00),
-('CTNK003', 'NK003', 'T003', 200, 13000.00),
-('CTNK004', 'NK004', 'T004', 75, 18000.00),
-('CTNK005', 'NK005', 'T005', 120, 7000.00);
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `tl_giohang`
 --
 
@@ -197,7 +172,7 @@ INSERT INTO `tl_khachhang` (`tl_makh`, `tl_tenkh`, `tl_email`, `tl_sdt`, `tl_dia
 ('KH004', 'Pham Thi D', 'ptd@example.com', '0909888777', '321 Đường D, Quận 4', '123pass\r\n'),
 ('KH005', 'Hoang Van E', 'hve@example.com', '0933444555', '654 Đường E, Quận 5', 'pass12345'),
 ('KH006', 'Lê Thu', 'thu@gmail.com', '0900111222', 'Hà Nội', '123456'),
-('KH007', 'llllllllllllllllllllllllll', 'thu1@gmail.com', '34567i', 'ha nam', '123456');
+('KH007', 'llllllllllllllllllllllllll', 'thu1@gmail.com', '9876543', 'ha nam', '123456');
 
 -- --------------------------------------------------------
 
@@ -254,29 +229,6 @@ INSERT INTO `tl_nhacungcap` (`tl_mancc`, `tl_tenncc`, `tl_diachi`, `tl_sdt`) VAL
 ('NCC005', 'Nhà cung cấp E', '50 Đường V, TP.HCM', '0285678901'),
 ('NCC01', 'Công ty Dược Phẩm ABC', 'Hà Nội', '0988123456'),
 ('NCC02', 'Công ty Dược Phẩm XYZ', 'TP.HCM', '0977654321');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `tl_nhapkho`
---
-
-CREATE TABLE `tl_nhapkho` (
-  `tl_manhap` varchar(10) NOT NULL,
-  `tl_ngaynhap` datetime DEFAULT NULL,
-  `tl_mancc` varchar(10) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `tl_nhapkho`
---
-
-INSERT INTO `tl_nhapkho` (`tl_manhap`, `tl_ngaynhap`, `tl_mancc`) VALUES
-('NK001', '2025-04-01 08:00:00', 'NCC001'),
-('NK002', '2025-04-05 09:30:00', 'NCC002'),
-('NK003', '2025-04-10 10:00:00', 'NCC003'),
-('NK004', '2025-04-15 11:45:00', 'NCC004'),
-('NK005', '2025-04-20 14:20:00', 'NCC005');
 
 -- --------------------------------------------------------
 
@@ -339,7 +291,11 @@ INSERT INTO `tl_user` (`tl_mauser`, `tl_username`, `tl_email`, `tl_password`, `t
 ('U005', 'thu123', 'thu@gmail.com', '$2b$10$fbw0wY2aUsygxtpb/9hdBubqcx1Hfy79iqooaKPB6atSfIklAl4Pi', 'Lê Thu', 'customer', '0900111222', 'Hà Nội', '2025-06-20 01:36:52', '2025-06-20 01:36:52', NULL),
 ('U006', 'linhling', 'thu123456@gmail.com', '$2b$10$E5LV6R/Fqz7CYdTNIYRmAONmstcj0KkJ0Z4VZ0LD0p9zjZM6u.Xtm', 'thuthuhtuhtu', 'customer', '67987654321', 'hà nội', '2025-06-20 05:34:12', '2025-06-23 01:29:15', 'KH006'),
 ('U007', 'linh', 'linh1@gmail.com', '$2b$10$61V9Nwyzc9YgPe0y402Ytu2bDyzgNRRlTj8N31ziT2btLrr2XmrX.', 'đttlinhn', 'customer', '0900909090', 'ha noi', '2025-06-20 06:53:56', '2025-06-20 06:53:56', NULL),
-('U008', 'tl', 'tl@gmail.com', '$2b$10$kyvOe3sRITLxdB727z4Ate0cL9xvB4RimS2caB9N/otlbMb2I1dDG', 'tltltl', 'customer', '8888888888', 'hn2', '2025-06-23 02:01:40', '2025-06-23 02:01:40', NULL);
+('U008', 'tl', 'tl@gmail.com', '$2b$10$NRvvUvBjZAMyrK25AWUpCulyiM9WM5d9ED4ygtOkzr9ZoIWXnrIS2', 'tltltl', 'customer', '8888888888', 'hn2', '2025-06-23 02:01:40', '2025-07-04 17:05:00', NULL),
+('U009', 'thulinh', 'tthulinh@gmail.com', '$2b$10$nPBUQudyAFaxp1vTpWgSj.Qj1FDkLluHnhHy1uawN.7/ikseAfzce', 'thulinh', 'customer', '12345321', 'ha noi', '2025-07-10 23:41:52', '2025-07-10 23:41:52', NULL),
+('U010', 'tltl', 'tltltl@gmail.com', '$2b$10$MCIiMA4.a1i9FlAytjxQVeAZ.Hi6btQKRRPz4.pYTo.pjgw4rbxBq', 'tltltlthulinh', 'customer', '808080808', 'hà nam', '2025-07-11 01:10:05', '2025-07-11 01:10:05', NULL),
+('U011', 'tfyghujinkml', 'ttttttttllllllll@gmail.com', '$2b$10$.fqXDC54Lww8/9xsPhpLDujk7WaPs/FX4OEtO6XzuM1lmzm1hWlUW', 'ththththth', 'customer', '34567890', 'hânma', '2025-07-11 07:50:12', '2025-07-11 07:50:12', NULL),
+('U012', 'thuthuthulinh', 'thuthuthuthulinh@gmail.com', '$2b$10$Co8XHCO.aOoQEna8rrCc6O2W4qg2MPvB/8sA9S8A1WnKcJ5Q9.6m6', 'thuhtuthtulinh', 'customer', '345679-', 'hanoi', '2025-07-11 08:40:28', '2025-07-11 08:40:28', NULL);
 
 --
 -- Indexes for dumped tables
@@ -363,14 +319,6 @@ ALTER TABLE `tl_admin`
 ALTER TABLE `tl_cthoadon`
   ADD PRIMARY KEY (`tl_macthd`),
   ADD KEY `tl_mahd` (`tl_mahd`),
-  ADD KEY `tl_mathuoc` (`tl_mathuoc`);
-
---
--- Indexes for table `tl_ctnhapkho`
---
-ALTER TABLE `tl_ctnhapkho`
-  ADD PRIMARY KEY (`tl_mactnk`),
-  ADD KEY `tl_manhap` (`tl_manhap`),
   ADD KEY `tl_mathuoc` (`tl_mathuoc`);
 
 --
@@ -406,13 +354,6 @@ ALTER TABLE `tl_khuyenmai`
 --
 ALTER TABLE `tl_nhacungcap`
   ADD PRIMARY KEY (`tl_mancc`);
-
---
--- Indexes for table `tl_nhapkho`
---
-ALTER TABLE `tl_nhapkho`
-  ADD PRIMARY KEY (`tl_manhap`),
-  ADD KEY `tl_mancc` (`tl_mancc`);
 
 --
 -- Indexes for table `tl_thuoc`
@@ -452,13 +393,6 @@ ALTER TABLE `tl_cthoadon`
   ADD CONSTRAINT `tl_cthoadon_ibfk_2` FOREIGN KEY (`tl_mathuoc`) REFERENCES `tl_thuoc` (`tl_mathuoc`);
 
 --
--- Constraints for table `tl_ctnhapkho`
---
-ALTER TABLE `tl_ctnhapkho`
-  ADD CONSTRAINT `tl_ctnhapkho_ibfk_1` FOREIGN KEY (`tl_manhap`) REFERENCES `tl_nhapkho` (`tl_manhap`),
-  ADD CONSTRAINT `tl_ctnhapkho_ibfk_2` FOREIGN KEY (`tl_mathuoc`) REFERENCES `tl_thuoc` (`tl_mathuoc`);
-
---
 -- Constraints for table `tl_giohang`
 --
 ALTER TABLE `tl_giohang`
@@ -471,12 +405,6 @@ ALTER TABLE `tl_giohang`
 ALTER TABLE `tl_hoadon`
   ADD CONSTRAINT `tl_hoadon_ibfk_1` FOREIGN KEY (`tl_makh`) REFERENCES `tl_khachhang` (`tl_makh`),
   ADD CONSTRAINT `tl_hoadon_ibfk_2` FOREIGN KEY (`tl_makm`) REFERENCES `tl_khuyenmai` (`tl_makm`);
-
---
--- Constraints for table `tl_nhapkho`
---
-ALTER TABLE `tl_nhapkho`
-  ADD CONSTRAINT `tl_nhapkho_ibfk_1` FOREIGN KEY (`tl_mancc`) REFERENCES `tl_nhacungcap` (`tl_mancc`);
 
 --
 -- Constraints for table `tl_thuoc`
